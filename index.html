@@ -492,21 +492,17 @@ tailwind.config = {
     /* Hide all action buttons (PDF, Share, Copy, audio) */
     button { display: none !important; }
 
-    /* But show RSVP as styled text */
-    #rsvp {
-      display: block !important;
-      border: 2px solid #570013 !important;
-      background: #fff !important;
-      color: #570013 !important;
-      text-align: center !important;
-      padding: 12px !important;
-      margin-top: 16px !important;
-    }
 
     /* Page break control */
     section { page-break-inside: avoid; }
     .grid { page-break-inside: avoid; }
     img { page-break-inside: avoid; max-height: 200px !important; object-fit: cover !important; }
+
+    /* Fix hero content visibility - inline opacity:0 stays when animations are disabled */
+    #hero-content * {
+      opacity: 1 !important;
+      transform: none !important;
+    }
 
     /* Text readability */
     h1, h2, h3, h4 { color: #570013 !important; text-shadow: none !important; }
@@ -569,7 +565,6 @@ tailwind.config = {
       <a class="text-[#735c00] border-b-2 border-[#735c00] pb-1 font-body text-sm tracking-wide" href="#hero">Our Story</a>
       <a class="text-[#584141] hover:text-[#570013] transition-colors font-body text-sm tracking-wide" href="#ceremony">Ceremony</a>
       <a class="text-[#584141] hover:text-[#570013] transition-colors font-body text-sm tracking-wide" href="#venue">Venue</a>
-      <a class="text-[#584141] hover:text-[#570013] transition-colors font-body text-sm tracking-wide" href="#rsvp">RSVP</a>
     </div>
     <button class="text-[#570013] hover:scale-110 hover:rotate-12 transition-all duration-300">
       <span class="material-symbols-outlined">calendar_add_on</span>
@@ -796,16 +791,6 @@ tailwind.config = {
               <p class="text-on-surface-variant font-body">6:00 PM onwards</p>
             </div>
           </li>
-          <li class="flex items-start gap-6 group">
-            <div class="w-12 h-12 flex-shrink-0 bg-primary rounded-full flex items-center justify-center text-on-primary group-hover:rotate-[360deg] group-hover:scale-110 transition-all duration-700 shadow-md group-hover:shadow-xl">
-              <span class="material-symbols-outlined">restaurant</span>
-            </div>
-            <div>
-              <h4 class="font-headline text-xl text-primary font-bold">Traditional Feast</h4>
-              <p class="text-on-surface-variant font-body">Lunch will be served from 12:00 PM</p>
-              <p class="text-secondary italic text-sm mt-1">Authentic South Indian Virundhu</p>
-            </div>
-          </li>
         </ul>
 
         <div class="mt-12 overflow-hidden rounded shadow-lg group">
@@ -833,14 +818,11 @@ tailwind.config = {
           GET DIRECTIONS
         </a>
 
-        <button class="w-full mt-8 py-4 bg-primary text-on-primary font-label font-bold tracking-widest uppercase hover:bg-surface-tint hover:shadow-xl transition-all active:translate-y-1 hover:-translate-y-0.5 duration-300" id="rsvp">
-          RSVP YOUR ATTENDANCE
-        </button>
         <button class="w-full mt-4 py-4 bg-primary text-on-primary font-label font-bold tracking-widest uppercase hover:bg-surface-tint hover:shadow-xl transition-all flex items-center justify-center gap-3 shadow-sm active:translate-y-1 hover:-translate-y-0.5 duration-300" onclick="window.print()">
           <span class="material-symbols-outlined">picture_as_pdf</span>
           DOWNLOAD AS PDF
         </button>
-        <button class="w-full mt-4 py-4 bg-primary text-on-primary font-label font-bold tracking-widest uppercase hover:bg-surface-tint hover:shadow-xl transition-all flex items-center justify-center gap-3 shadow-sm active:translate-y-1 hover:-translate-y-0.5 duration-300">
+        <button class="w-full mt-4 py-4 bg-primary text-on-primary font-label font-bold tracking-widest uppercase hover:bg-surface-tint hover:shadow-xl transition-all flex items-center justify-center gap-3 shadow-sm active:translate-y-1 hover:-translate-y-0.5 duration-300" onclick="if(navigator.share){navigator.share({title:'Engagement of Bharanidharan & Sanjana',text:'You are cordially invited to the Engagement Ceremony of Bharanidharan & Sanjana on April 30, 2026',url:window.location.href}).catch(()=>{})}else{navigator.clipboard.writeText(window.location.href);this.innerHTML='<span class=\'material-symbols-outlined\'>check_circle</span> Link Copied!';setTimeout(()=>{this.innerHTML='<span class=\'material-symbols-outlined\'>share</span> SHARE CEREMONY'},2000)}">
           <span class="material-symbols-outlined">share</span>
           SHARE CEREMONY
         </button>
@@ -950,7 +932,7 @@ tailwind.config = {
         <p class="font-body text-sm tracking-wide text-[#584141]">&#169; 2026 - A Sacred Union</p>
       </div>
       <div class="flex flex-col gap-4 text-center">
-        <a class="font-body text-sm tracking-wide text-[#584141] hover:text-[#570013] underline transition-all hover:tracking-wider duration-300" href="#">KRG Thirumana Mandapam Map</a>
+        <a class="font-body text-sm tracking-wide text-[#584141] hover:text-[#570013] underline transition-all hover:tracking-wider duration-300" href="https://www.google.com/maps/search/KRG+Thirumana+Mandapam+Singaperumal+Kovil+Chennai" target="_blank" rel="noopener">KRG Thirumana Mandapam Map</a>
         <a class="font-body text-sm tracking-wide text-[#584141] hover:text-[#570013] underline transition-all hover:tracking-wider duration-300" href="#">Contact Families</a>
         <a class="font-body text-sm tracking-wide text-[#584141] hover:text-[#570013] underline transition-all hover:tracking-wider duration-300" href="#">Add to Calendar</a>
       </div>
