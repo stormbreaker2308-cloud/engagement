@@ -640,7 +640,7 @@ tailwind.config = {
 <div id="sparkles-container"></div>
 
 <!-- ==================== BACKGROUND MUSIC ==================== -->
-<audio id="bg-music" src="audio/vachindamma.mp3" loop preload="auto"></audio>
+<audio id="bg-music" preload="auto"></audio>
 
 <!-- ==================== TOPBAR ==================== -->
 <header class="fixed top-0 w-full z-50 bg-[#fff8ef]/90 backdrop-blur-md border-b border-[#e0bfbf]/15 shadow-sm shadow-[#570013]/5 transition-all duration-500" id="main-header" style="transform: translateY(-100%);">
@@ -1007,7 +1007,7 @@ tailwind.config = {
       </div>
       <div class="hidden md:block">
         <p class="text-[10px] uppercase tracking-[0.2em] text-secondary-fixed/80 leading-none mb-1">Playing Now</p>
-        <p class="text-xs font-bold text-white whitespace-nowrap">Vachindamma &middot; Geetha Govindam</p>
+        <p class="text-xs font-bold text-white whitespace-nowrap" id="track-title">Vachindamma &middot; Geetha Govindam</p>
       </div>
     </div>
     <div class="h-6 w-px bg-secondary-fixed/20 mx-2 hidden md:block"></div>
@@ -1055,6 +1055,33 @@ tailwind.config = {
 
 <!-- ==================== SCRIPTS ==================== -->
 <script>
+// ===== Random Playlist =====
+(function() {
+  const PLAYLIST = [
+    { src: 'audio/vachindamma.mp3', title: 'Vachindamma · Geetha Govindam' },
+    { src: 'audio/kalalo-kooda.mp3', title: 'Kalalo Kooda · Liger' }
+  ];
+  const music = document.getElementById('bg-music');
+  const trackTitle = document.getElementById('track-title');
+  let current = Math.floor(Math.random() * PLAYLIST.length);
+
+  function loadTrack(i) {
+    current = i;
+    music.src = PLAYLIST[i].src;
+    if (trackTitle) trackTitle.textContent = PLAYLIST[i].title;
+  }
+
+  music.addEventListener('ended', () => {
+    let next = Math.floor(Math.random() * PLAYLIST.length);
+    if (PLAYLIST.length > 1 && next === current) next = (next + 1) % PLAYLIST.length;
+    loadTrack(next);
+    music.play().catch(() => {});
+  });
+
+  // Start on a random song
+  loadTrack(current);
+})();
+
 // ===== Grand Entrance =====
 (function() {
   const entrance = document.getElementById('grand-entrance');
